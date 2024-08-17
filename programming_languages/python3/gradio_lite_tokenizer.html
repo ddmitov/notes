@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <script type="module" crossorigin src="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.css"/>
+
+    <title>Transformers.js with Gradio Lite</title>
+
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      gradio-lite {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+<body>
+    <gradio-lite theme="dark">
+
+        <gradio-requirements>
+transformers_js_py
+        </gradio-requirements>
+
+        <gradio-file name="app.py" entrypoint>
+from transformers_js import import_transformers_js
+import gradio as gr
+
+transformers = await import_transformers_js()
+
+tokenizer = await transformers.AutoTokenizer.from_pretrained('Xenova/dbrx-instruct-tokenizer')
+
+async def extract(text):
+    return tokenizer.encode(text)
+
+demo = gr.Interface(extract, 'textbox', 'json', allow_flagging='never')
+
+demo.launch(show_api=False)
+        </gradio-file>
+    </gradio-lite>
+</body>
+
+</html>

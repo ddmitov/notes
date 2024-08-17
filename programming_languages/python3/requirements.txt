@@ -1,0 +1,6 @@
+--trusted-host pypi.org
+--trusted-host files.pythonhosted.org
+--extra-index-url https://www.example.com/python
+.\some_module.whl
+some_module>=1.2.3.4
+some_module==1.2.3.4
