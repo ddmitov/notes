@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# PyArrow table from a Parquet dataset in object storage:
+# PyArrow table from a Parquet dataset in object storage with column filters:
 import pyarrow.fs as fs
 import pyarrow.parquet as pq
 
@@ -27,6 +27,18 @@ pandas_dataframe = pq.ParquetDataset(
         'COLUMN_05'
     ],
     use_threads=True
+)
+
+# PyArrow table from a Parquet dataset in object storage
+# with substring filtering on a text column:
+texts_arrow_table = pq.ParquetDataset(
+    parquet_pathname_list,
+    filesystem=s3_filesystem,
+).read().filter(
+    pc.match_substring(
+        pc.field('text'),
+        search_request
+    )
 )
 
 # PyArrow table from a Parquet file in object storage:
