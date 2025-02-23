@@ -14,3 +14,13 @@ arrow_table = arrow_table.append_column(
 import pyarrow
 
 pyarrow_table = pyarrow_table.drop(['COLUMN'])
+
+# Convert a PyArrow table column to list:
+python_list = arrow_table.column('column_name').to_pylist()
+
+# Convert a list to a PyArrow table column:
+new_arrow_table = arrow_table.set_column(
+    3, # column number starting from zero
+    'column_name',
+    pa.array(python_list)
+)
