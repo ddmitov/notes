@@ -6,7 +6,8 @@ import pyarrow.parquet as pq
 
 s3_filesystem = fs.S3FileSystem()
 
-pandas_dataframe = pq.ParquetDataset(
+# 1.
+arrow_table = pq.ParquetDataset(
     parquet_pathname_list,
     filesystem=s3_filesystem,
     filters=[
@@ -28,6 +29,23 @@ pandas_dataframe = pq.ParquetDataset(
     ],
     use_threads=True
 )
+
+# 2.
+filters = []
+
+filters.append(
+    [
+        ('column_01', '=', criterion_01),
+        ('column_02', '>=', criterion_02)
+    ]
+)
+
+arrow_table = pq.ParquetDataset(
+    file_paths,
+    filesystem = dataset_filesystem,
+    filters    = filters,
+    pre_buffer = True
+).read(use_threads = True)
 
 # PyArrow table from a Parquet dataset in object storage
 # with substring filtering on a text column:
