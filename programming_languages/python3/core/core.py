@@ -19,3 +19,11 @@ ratio = SequenceMatcher(
     'first sentence',
     'second sentence',
 ).ratio()
+
+# Get all files in a directory recursively:
+def recursive_files_lister(root_dir: str) -> List[str]:
+    return [
+        os.path.join(root, filename)
+        for root, _, filenames in os.walk(root_dir) 
+        for filename in filenames
+    ]
