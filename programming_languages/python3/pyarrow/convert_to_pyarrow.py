@@ -100,3 +100,12 @@ pyarrow_table = pa.Table.from_pandas(
     schema=pyarrow_schema,
     preserve_index=False
 )
+
+# PyArrow table from lists:
+pyarrow_table = pa.Table.from_arrays(
+    [
+        pa.array(list_01),
+        pa.array(list_02)
+    ],
+    names=['COLUMN_01', 'COLUMN_02']
+)
